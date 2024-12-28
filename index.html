@@ -1,0 +1,24 @@
+<!-- index.html -->
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLP XOR Neural Network</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>MLP Neural Network</h1>
+    <div id="app">
+        <h2>Train the Neural Network</h2>
+        <button id="train-btn">Train</button>
+        <h2>Test the Neural Network</h2>
+        <input type="text" id="input-x" placeholer="Input X (e.g., 0)">
+        <input type="text" id="input-y" placeholer="Input Y (e.g., 1)">
+        <button id="predict-btn">Predict</button>
+        <p id="output">Prediction: </p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="app.js"></script>
+</body>
+</html>
