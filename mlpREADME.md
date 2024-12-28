@@ -33,10 +33,7 @@ This project reflects my expertise in:
 ### **Problem Statement: XOR Logic**
 The XOR problem is defined as:
 \[
-\text{XOR}(x_1, x_2) = \begin{cases} 
-0 & \text{if } x_1 = x_2 \\
-1 & \text{if } x_1 \neq x_2 
-\end{cases}
+\text{XOR}(x_1, x_2) = <p align="center"><img src="svgs/6e13b5dd2a8385215533af41175b6598.svg?invert_in_darkmode" align=middle width=107.60278649999998pt height=49.315569599999996pt/></p>
 \]
 The input space \([x_1, x_2]\) is linearly inseparable, necessitating a model with non-linear capabilities.
 
