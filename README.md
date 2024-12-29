@@ -16,7 +16,7 @@ This project showcases my expertise in:
 
 ## **Features**
 
-- **Interactive Training**: Users can train the model in real time in their web browser.
+- **Interactive Training**: Users can train the model in real-time in their web browser.
 - **Real-Time Predictions**: Test the trained model by providing inputs to observe the XOR output.
 - **Browser-Based Framework**: No installation required; the app runs natively in any modern browser.
 - **Clean User Interface**: Designed with HTML and CSS for usability and aesthetics.
@@ -127,7 +127,7 @@ By building this project, I aim to highlight my capability to bridge the gap bet
 
 ## **Contact**
 Feel free to reach out for collaboration or inquiries:
-- **Email**: [your.email@example.com](mailto:alaraom93@gmail.com)
-- **LinkedIn**: [Your LinkedIn Profile](www.linkedin.com/in/jesus-omar-lara)
+- **Email**: [alaraom93@gmail.com](mailto:alaraom93@gmail.com)
+- **LinkedIn**: [Jesus Lara](www.linkedin.com/in/jesus-omar-lara)
 
 ---
