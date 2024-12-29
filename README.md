@@ -1,149 +1,133 @@
-# mlp-web-app
-
 ### **README: MLP XOR Neural Network Web App**
 
 ---
 
 ## **Project Overview**
 
-This project implements a **Multilayer Perceptron (MLP)** to solve the classic **XOR problem**—a benchmark in artificial intelligence and neural network theory. The app is built using **TensorFlow.js**, allowing users to train and test the model directly in their web browser. 
+This project implements a **Multilayer Perceptron (MLP)** to solve the **XOR problem**, a classic benchmark in neural network research. It demonstrates the ability of an MLP to learn non-linear patterns through the implementation of hidden layers. The project is built using **TensorFlow.js** and runs entirely in the browser, making it accessible, interactive, and efficient.
 
-The XOR problem is linearly non-separable, requiring a hidden layer to map inputs into a space where linear decision boundaries are possible. This project demonstrates foundational concepts of neural networks and provides a robust, interactive platform for visualizing the learning process of an MLP in real time.
-
-This project reflects my expertise in:
-1. Neural network architecture and optimization.
-2. Mathematical formulation of deep learning problems.
-3. JavaScript-based machine learning frameworks.
-4. Deploying interactive web-based AI solutions.
+This project showcases my expertise in:
+1. Neural network architecture and implementation.
+2. Mathematical modeling and optimization.
+3. Modern web technologies for machine learning applications.
+4. End-to-end deployment of AI solutions.
 
 ---
 
 ## **Features**
 
-- **Fully Functional MLP**: A neural network with one hidden layer implemented in TensorFlow.js.
-- **Browser-Based Training**: Users can train the model in their browser without needing external servers.
-- **Real-Time Predictions**: Users can input values and instantly observe predictions.
-- **XOR Dataset**: Demonstrates the ability of MLPs to learn non-linear patterns.
-- **Interactive UI**: Clean and user-friendly interface built with HTML and CSS.
+- **Interactive Training**: Users can train the model in real time in their web browser.
+- **Real-Time Predictions**: Test the trained model by providing inputs to observe the XOR output.
+- **Browser-Based Framework**: No installation required; the app runs natively in any modern browser.
+- **Clean User Interface**: Designed with HTML and CSS for usability and aesthetics.
 
 ---
 
-## **Mathematical Foundations**
+## **Technical Breakdown**
 
-### **Problem Statement: XOR Logic**
-The XOR problem is defined as:
-\[
-\text{XOR}(x_1, x_2) = <p align="center"><img src="svgs/6e13b5dd2a8385215533af41175b6598.svg?invert_in_darkmode" align=middle width=107.60278649999998pt height=49.315569599999996pt/></p>
-\]
-The input space \([x_1, x_2]\) is linearly inseparable, necessitating a model with non-linear capabilities.
+### **The XOR Problem**
+The XOR (exclusive OR) function is defined as:
 
-### **MLP Architecture**
-The MLP architecture used in this project consists of:
-1. **Input Layer**: Two input nodes \((x_1, x_2)\).
-2. **Hidden Layer**: Four nodes with a sigmoid activation function to introduce non-linearity.
+- Output is `1` if exactly one of the two inputs is `1`.
+- Output is `0` if both inputs are the same.
+
+| Input 1 | Input 2 | XOR Output |
+|---------|---------|------------|
+|    0    |    0    |     0      |
+|    0    |    1    |     1      |
+|    1    |    0    |     1      |
+|    1    |    1    |     0      |
+
+The XOR problem is non-linearly separable, meaning a single-layer perceptron cannot solve it. An MLP introduces hidden layers that map the inputs into a higher-dimensional space where linear separation is possible.
+
+---
+
+### **Model Architecture**
+1. **Input Layer**: Two nodes for the two inputs.
+2. **Hidden Layer**: Four nodes with a sigmoid activation function.
 3. **Output Layer**: A single node with a sigmoid activation for binary classification.
 
-Mathematically, the forward pass is:
-\[
-z^{(1)} = W^{(1)}x + b^{(1)}, \quad a^{(1)} = \sigma(z^{(1)})
-\]
-\[
-z^{(2)} = W^{(2)}a^{(1)} + b^{(2)}, \quad \hat{y} = \sigma(z^{(2)})
-\]
-Where:
-- \( W^{(1)} \) and \( W^{(2)} \) are weight matrices for the hidden and output layers.
-- \( b^{(1)} \) and \( b^{(2)} \) are bias vectors.
-- \( \sigma(x) = \frac{1}{1 + e^{-x}} \) is the sigmoid activation function.
+**Forward Pass**:
+- Compute weighted sums at each layer and apply activation functions.
 
----
+**Backpropagation**:
+- Compute errors at the output layer and propagate them backward.
+- Update weights using gradient descent to minimize the loss.
 
 ### **Loss Function**
-The model minimizes the **Mean Squared Error (MSE)**:
-\[
-\mathcal{L} = \frac{1}{n} \sum_{i=1}^{n} (\hat{y}_i - y_i)^2
-\]
-
----
+The Mean Squared Error (MSE) is used to evaluate the performance:
+```
+Loss = (1/n) * Σ (y_pred - y_true)^2
+```
+Where:
+- `y_pred` is the predicted output.
+- `y_true` is the actual output.
 
 ### **Optimization**
-The weights are updated using **Stochastic Gradient Descent (SGD)**:
-\[
-W \leftarrow W - \eta \frac{\partial \mathcal{L}}{\partial W}
-\]
-Where:
-- \( \eta \) is the learning rate.
-
-The partial derivatives are computed using backpropagation:
-\[
-\delta^{(2)} = (\hat{y} - y) \cdot \sigma'(z^{(2)})
-\]
-\[
-\delta^{(1)} = (\delta^{(2)} W^{(2)}) \cdot \sigma'(z^{(1)})
-\]
+Weights are updated using Stochastic Gradient Descent (SGD):
+```
+Weight_new = Weight_old - (learning_rate * gradient)
+```
 
 ---
 
 ## **Technology Stack**
 
-- **TensorFlow.js**: For implementing and training the neural network.
-- **HTML/CSS**: For creating a clean and responsive user interface.
-- **JavaScript**: For integrating TensorFlow.js and handling UI interactions.
+- **TensorFlow.js**: For defining, training, and evaluating the neural network.
+- **HTML/CSS**: For creating the user interface.
+- **JavaScript**: For integrating TensorFlow.js and managing user interactions.
 
 ---
 
 ## **How It Works**
 
 ### **Training**
-1. Users click the "Train Model" button.
-2. The MLP is trained on the XOR dataset using the backpropagation algorithm.
-3. Training progress, including loss at each epoch, is logged to the console.
+1. Click the "Train Model" button.
+2. The MLP is trained on the XOR dataset.
+3. Training logs, including loss per epoch, are displayed in the console.
 
 ### **Testing**
-1. Users input \( x_1 \) and \( x_2 \).
-2. The trained model predicts the XOR output.
-3. The result is displayed in real time.
+1. Enter two inputs (0 or 1).
+2. Click "Predict" to see the model's output in real time.
 
 ---
 
-## **Installation and Deployment**
+## **Installation and Usage**
 
 ### **Local Setup**
-1. Clone the repository:
+1. Clone this repository:
    ```bash
    git clone https://github.com/JOmarLara/mlp-web-app.git
    ```
-2. Open `index.html` in a web browser.
+2. Navigate to the project directory and open `index.html` in a web browser.
 
-### **Live Deployment**
-This app is deployed using **GitHub Pages**. Access it [here](#).
+### **Live Demo**
+Check out the live deployment on **GitHub Pages**: [Demo Link](https://jomarlara.github.io/mlp-web-app/).
 
 ---
 
-## **Future Improvements**
-1. Add support for visualizing the decision boundary.
-2. Enable saving and loading trained models.
-3. Extend to multi-class classification problems.
-4. Provide detailed performance metrics like accuracy and confusion matrices.
+## **Future Enhancements**
+- Add visualization of the decision boundary.
+- Extend the interface to support custom datasets.
+- Display performance metrics such as accuracy and confusion matrices.
+- Enable model export/import functionality.
 
 ---
 
 ## **Why This Project Matters**
 
-This project showcases my ability to:
-- Understand and implement advanced machine learning models.
-- Translate mathematical concepts into functional code.
-- Build interactive, browser-based applications using modern frameworks.
+This project demonstrates:
+- The ability to implement and train a neural network to solve a fundamental problem in AI.
+- Proficiency in TensorFlow.js and web development technologies.
+- A practical understanding of the interplay between theoretical mathematics and real-world applications.
 
-The XOR problem is foundational in AI, demonstrating how neural networks overcome linear separability challenges. This project is designed to highlight core machine learning principles while being an engaging, real-world application.
+By building this project, I aim to highlight my capability to bridge the gap between technical complexity and user-friendly AI solutions.
 
 ---
 
 ## **Contact**
-For inquiries or collaboration, feel free to reach out at **[your.email@example.com](mailto:alaraom93@gmail.com)** or connect with me on **[LinkedIn](www.linkedin.com/in/jesus-omar-lara)**. 
-
----
-
-## **Acknowledgments**
-Inspired by foundational works in neural networks and the advancements in browser-based AI frameworks.
+Feel free to reach out for collaboration or inquiries:
+- **Email**: [your.email@example.com](mailto:alaraom93@gmail.com)
+- **LinkedIn**: [Your LinkedIn Profile](www.linkedin.com/in/jesus-omar-lara)
 
 ---
