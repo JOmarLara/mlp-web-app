@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MLP XOR Neural Network</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <h1>MLP Neural Network</h1>
@@ -20,5 +21,9 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="app.js"></script>
+    <div id="training-progress"></div>
+    <div class="chart-container">
+        <canvas id="loss-chart"></canvas>
+    </div>
 </body>
 </html>
