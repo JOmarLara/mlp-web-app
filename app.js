@@ -74,7 +74,7 @@ document.getElementById('train-btn').addEventListener('click', () => {
     trainModel();
 });
 
-document/getElementById('predict-btn').addEventListener('click', () => {
+document.getElementById('predict-btn').addEventListener('click', () => {
     const x = parseFloat(document.getElementById('input-x').value);
     const y = parseFloat(document.getElementById('input-y').value);
     const prediction = predict([x, y]);
