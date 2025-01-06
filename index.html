@@ -1,5 +1,5 @@
 <!-- index.html -->
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,16 +14,25 @@
         <h2>Train the Neural Network</h2>
         <button id="train-btn">Train</button>
         <h2>Test the Neural Network</h2>
-        <input type="text" id="input-x" placeholer="Input X (e.g., 0)">
-        <input type="text" id="input-y" placeholer="Input Y (e.g., 1)">
+        <input type="text" id="input-x" placeholder="Input X (e.g., 0)">
+        <input type="text" id="input-y" placeholder="Input Y (e.g., 1)">
         <button id="predict-btn">Predict</button>
         <p id="output">Prediction: </p>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="app.js"></script>
     <div id="training-progress"></div>
-    <div class="chart-container">
-        <canvas id="loss-chart"></canvas>
+    <div class="visualization-container">
+        <div class="visualization-item">
+            <h3>Decision Boundary</h3>
+            <canvas id="decision-boundary" width="200" height="200"></canvas>
+        </div>
+        <div class="visualization-item">
+            <h3>Training Loss</h3>
+            <div id="loss-chart-container" class="chart-container">
+                <canvas id="loss-chart"></canvas>
+            </div>
+        </div>
     </div>
 </body>
 </html>

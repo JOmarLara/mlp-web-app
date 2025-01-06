@@ -2,24 +2,29 @@
 let model;
 let modelTrained = false;
 
+async function initializeTensorFlow() {
+    try {
+        await tf.setBackend('webgl');
+        console.log('Using WebGL backend');
+    } catch (e) {
+        console.warn('WebGL not supported, falling back to CPU', e);
+        await tf.setBackend('cpu');
+        console.log('Using CPU backend');
+    }
+}
+
+
 // Define the module
 const createModel = () => {
     const model = tf.sequential();
 
-    // Input layer (2 inputs)
     model.add(tf.layers.dense({ inputShape: [2], units: 4, activation: 'sigmoid' }));
-
-    // Hidden layer
     model.add(tf.layers.dense({ units: 4, activation: 'sigmoid' }));
+    model.add(tf.layers.dense({ units: 1, activation: 'sigmoid' }));
 
-
-    // Output layer (1 output)
-    model.add(tf.layers.dense({ units:1, activation: 'sigmoid' }));
-
-    // Compile the model
     model.compile({
-        optimizer: tf.train.sgd(0.1), // Stochastic Gradient Descent
-        loss: 'meanSquaredError', // Loss function
+        optimizer: tf.train.adam(0.1), // Changed to Adam optimizer
+        loss: 'binaryCrossentropy', // Changed loss function
     });
 
     return model;
@@ -63,6 +68,7 @@ const trainModel = async () => {
     console.log('Training complete!');
     progressDiv.innerHTML = 'Training complete!';
     modelTrained = true;
+    visualizeDecisionBoundary();
 };
 
 const predict = (input) => {
@@ -73,6 +79,51 @@ const predict = (input) => {
     const prediction = model.predict(tf.tensor2d([input]));
     return prediction.dataSync()[0];
 };
+
+const visualizeDecisionBoundary = () => {
+    console.log('Entering visualizeDecisionBoundary');
+    if (!modelTrained) {
+        console.error('Model not trained yet');
+        return;
+    }
+
+    const canvas = document.getElementById('decision-boundary');
+    if (!canvas) {
+        console.error('Canvas element not found');
+        return;
+    }
+    console.log('Canvas found:', canvas);
+
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width;
+    const height = canvas.height;
+    console.log(`Canvas dimensions: ${width}x${height}`);
+
+    const imageData = ctx.createImageData(width, height);
+
+    console.log('Starting to generate decision boundary...');
+    for (let x = 0; x < width; x++) {
+        for (let y = 0; y < height; y++) {
+            const xNorm = x / width;
+            const yNorm = y / height;
+            const prediction = predict([xNorm, yNorm]);
+            if (x === 0 && y === 0) {
+                console.log(`Sample prediction for [0, 0]: ${prediction}`);
+            }
+            const index = (y * width + x) * 4;
+            const color = Math.floor(prediction * 255);
+            imageData.data[index] = 255 - color;
+            imageData.data[index + 1] = color;
+            imageData.data[index + 2] = 255; // Black background color (no transparency)
+            imageData.data[index + 3] = 255; // Alpha transparency (fully opaque)
+        }
+    }
+    console.log('Finished generating decision boundary');
+
+    ctx.putImageData(imageData, 0, 0);
+    console.log('Decision boundary drawn to canvas');
+};
+
 
 const updateLossChart = (lossValues) => {
     if (!chart) {
@@ -106,12 +157,15 @@ const updateLossChart = (lossValues) => {
 
 // Modify the train button event listener
 document.getElementById('train-btn').addEventListener('click', async () => {
+    await initializeTensorFlow(); // Initialize TensorFlow.js
     model = createModel();
     console.log('Model created:', model);
     modelTrained = false;
     await trainModel();
     modelTrained = true;
+    visualizeDecisionBoundary();
 });
+
 
 document.getElementById('predict-btn').addEventListener('click', () => {
     if (!modelTrained) {
@@ -127,3 +181,17 @@ document.getElementById('predict-btn').addEventListener('click', () => {
     const prediction = predict([x, y]);
     document.getElementById('output').innerText = `Prediction: ${prediction.toFixed(3)}`;
 });
+
+const updatePrediction = () => {
+    if (modelTrained) {
+        const x = parseFloat(document.getElementById('input-x').value);
+        const y = parseFloat(document.getElementById('input-y').value);
+        if (!isNaN(x) && !isNaN(y)) {
+            const prediction = predict([x, y]);
+            document.getElementById('output').innerText = `Prediction: ${prediction.toFixed(3)}`;
+        }
+    }
+};
+
+document.getElementById('input-x').addEventListener('input', updatePrediction);
+document.getElementById('input-y').addEventListener('input', updatePrediction);
